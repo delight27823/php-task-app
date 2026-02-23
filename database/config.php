@@ -1,9 +1,23 @@
 <?php
+$host = "delightsql.mysql.database.azure.com";
+$username = "delightadmin@delightsql";
+$password = "Azure12345!";
+$dbname = "productsdb";
 
-// Configuration for database connection
+$conn = mysqli_init();
+mysqli_ssl_set($conn,NULL,NULL,NULL,NULL,NULL);
 
-$host       = getenv('DB_HOST');
-$username   = getenv('DB_USERNAME');
-$password   = getenv('DB_PASSWORD');
-$db_name     = getenv('DB_DATABASE');
-$sslcert    = "ssl/DigiCertGlobalRootCA.crt.pem";
+mysqli_real_connect(
+    $conn,
+    $host,
+    $username,
+    $password,
+    $dbname,
+    3306,
+    MYSQLI_CLIENT_SSL
+);
+
+if (mysqli_connect_errno()) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+?>
