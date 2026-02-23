@@ -1,23 +1,17 @@
 <?php
-$host = "delightsql.mysql.database.azure.com";
-$username = "delightadmin@delightsql";
-$password = "Azure12345!";
-$dbname = "productsdb";
+$servername = "delightsql.mysql.database.azure.com";
+$username   = "delightadmin";
+$password   = "Azure12345!";
+$dbname     = "productsdb";
 
-$conn = mysqli_init();
-mysqli_ssl_set($conn,NULL,NULL,NULL,NULL,NULL);
+// Azure requires username@servername format
+$username_full = $username . "@delightsql";
 
-mysqli_real_connect(
-    $conn,
-    $host,
-    $username,
-    $password,
-    $dbname,
-    3306,
-    MYSQLI_CLIENT_SSL
-);
+// Create connection and SELECT DATABASE
+$conn = new mysqli($servername, $username_full, $password, $dbname);
 
-if (mysqli_connect_errno()) {
-    die("Connection failed: " . mysqli_connect_error());
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 ?>
